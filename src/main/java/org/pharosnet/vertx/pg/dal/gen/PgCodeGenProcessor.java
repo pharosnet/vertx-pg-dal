@@ -7,6 +7,8 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -20,6 +22,20 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class PgCodeGenProcessor extends AbstractProcessor {
 
+    private Messager messager;
+    private Elements elementUtils;
+    private Filer filer;
+    private Types typeUtils;
+
+
+    @Override
+    public synchronized void init(ProcessingEnvironment processingEnv) {
+        super.init(processingEnv);
+        this.typeUtils = processingEnv.getTypeUtils();
+        this.elementUtils = processingEnv.getElementUtils();
+        this.filer = processingEnv.getFiler();
+        this.messager = processingEnv.getMessager();
+    }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -41,10 +57,18 @@ public class PgCodeGenProcessor extends AbstractProcessor {
                 } catch (Exception err) {
                     System.out.println(err.getMessage());
                 }
+
+                // 获取包名
+                String packageName = elementUtils.getPackageOf(e).getQualifiedName().toString();
+                // 根据旧Java类名创建新的Java文件
+                String className = typeElement.getQualifiedName().toString().substring(packageName.length() + 1);
+
+                System.out.println("xxxx packageName " + packageName);
+                System.out.println("xxxx className " + className);
                 System.out.println("xxxx " + e.toString());
-                System.out.println("xxxx " + e.getSimpleName());
-                System.out.println("xxxx " + e.getEnclosedElements());
-                System.out.println(e.getKind());
+                System.out.println("xxxx SimpleName " + e.getSimpleName());
+                System.out.println("xxxx EnclosedElements" + e.getEnclosedElements());
+                System.out.println("xxxx Kind" + e.getKind());
 
                 messager.printMessage(Diagnostic.Kind.WARNING, "Printing:" + e.toString());
                 messager.printMessage(Diagnostic.Kind.WARNING, "Printing:" + e.getSimpleName());

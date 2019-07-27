@@ -71,7 +71,7 @@ public class PostgresDAL {
                         handler.handle(Future.succeededFuture(Optional.empty()));
                         return;
                     }
-                    handler.handle(Future.succeededFuture(Optional.of(r.result().value().parallelStream())));
+                    handler.handle(Future.succeededFuture(Optional.of(r.result().value().stream())));
                 });
     }
 
@@ -104,31 +104,31 @@ public class PostgresDAL {
     }
 
     public void queryString(String ql, Tuple args, Handler<AsyncResult<Optional<String>>> handler) {
-        this.queryOne(ql, args, new StringRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.stringRowConvert(), handler);
     }
 
     public void queryBoolean(String ql, Tuple args, Handler<AsyncResult<Optional<Boolean>>> handler) {
-        this.queryOne(ql, args, new BooleanRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.booleanRowConvert(), handler);
     }
 
     public void queryInteger(String ql, Tuple args, Handler<AsyncResult<Optional<Integer>>> handler) {
-        this.queryOne(ql, args, new IntegerRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.integerRowConvert(), handler);
     }
 
     public void queryLong(String ql, Tuple args, Handler<AsyncResult<Optional<Long>>> handler) {
-        this.queryOne(ql, args, new LongRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.longRowConvert(), handler);
     }
 
     public void queryFloat(String ql, Tuple args, Handler<AsyncResult<Optional<Float>>> handler) {
-        this.queryOne(ql, args, new FloatRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.floatRowConvert(), handler);
     }
 
     public void queryDouble(String ql, Tuple args, Handler<AsyncResult<Optional<Double>>> handler) {
-        this.queryOne(ql, args, new DoubleRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.doubleRowConvert(), handler);
     }
 
     public void queryJsonObject(String ql, Tuple args, Handler<AsyncResult<Optional<JsonObject>>> handler) {
-        this.queryOne(ql, args, new JsonObjectRowConvert(), handler);
+        this.queryOne(ql, args, RowConverts.jsonObjectRowConvert(), handler);
     }
 
     public void update(String ql, Tuple args, Handler<AsyncResult<Integer>> handler) {
