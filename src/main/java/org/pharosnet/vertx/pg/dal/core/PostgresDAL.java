@@ -3,7 +3,6 @@ package org.pharosnet.vertx.pg.dal.core;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
-import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -21,8 +20,27 @@ public class PostgresDAL {
 
     private static final Logger log = LoggerFactory.getLogger(PostgresDAL.class);
 
+    private static PostgresDAL dal;
 
-    protected Vertx vertx;
+    public static PostgresDAL INTI(PgPool client) {
+        if (client == null) {
+            throw new IllegalArgumentException("client is null point");
+        }
+        dal = new PostgresDAL(client);
+        return dal;
+    }
+
+    public static PostgresDAL get() {
+        if (dal == null) {
+            throw new IllegalAccessError("dal is null point");
+        }
+        return dal;
+    }
+
+    public PostgresDAL(PgPool client) {
+        this.client = client;
+    }
+
     private PgPool client;
 
     public PgPool getClient() {
