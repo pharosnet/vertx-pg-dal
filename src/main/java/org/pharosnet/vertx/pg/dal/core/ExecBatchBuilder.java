@@ -10,6 +10,6 @@ public interface ExecBatchBuilder<T> {
 
     List<Tuple> args();
 
-    ExecBuilder build(List<T> rows);
+    ExecBatchBuilder build(List<T> rows);
 
 }
