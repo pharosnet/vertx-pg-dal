@@ -115,4 +115,12 @@ public class Tx {
         });
     }
 
+    public void update(ExecBuilder builder, Handler<AsyncResult<Integer>> handler) {
+        this.update(builder.query(), builder.args(), handler);
+    }
+
+    public void updateBatch(ExecBatchBuilder builder, Handler<AsyncResult<Integer>> handler) {
+        this.updateBatch(builder.query(), builder.args(), handler);
+    }
+
 }
