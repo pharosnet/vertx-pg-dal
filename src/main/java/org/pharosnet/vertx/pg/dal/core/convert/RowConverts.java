@@ -2,32 +2,40 @@ package org.pharosnet.vertx.pg.dal.core.convert;
 
 public class RowConverts {
 
+    private static BooleanRowConvert booleanRowConvert = new BooleanRowConvert();
+    private static DoubleRowConvert doubleRowConvert = new DoubleRowConvert();
+    private static FloatRowConvert floatRowConvert = new FloatRowConvert();
+    private static IntegerRowConvert integerRowConvert = new IntegerRowConvert();
+    private static JsonObjectRowConvert jsonObjectRowConvert = new JsonObjectRowConvert();
+    private static LongRowConvert longRowConvert = new LongRowConvert();
+    private static StringRowConvert stringRowConvert = new StringRowConvert();
+
     public static BooleanRowConvert booleanRowConvert() {
-        return new BooleanRowConvert();
+        return booleanRowConvert;
     }
 
     public static DoubleRowConvert doubleRowConvert() {
-        return new DoubleRowConvert();
+        return doubleRowConvert;
     }
 
     public static FloatRowConvert floatRowConvert() {
-        return new FloatRowConvert();
+        return floatRowConvert;
     }
 
     public static IntegerRowConvert integerRowConvert() {
-        return new IntegerRowConvert();
+        return integerRowConvert;
     }
 
     public static JsonObjectRowConvert jsonObjectRowConvert() {
-        return new JsonObjectRowConvert();
+        return jsonObjectRowConvert;
     }
 
     public static LongRowConvert longRowConvert() {
-        return new LongRowConvert();
+        return longRowConvert;
     }
 
     public static StringRowConvert stringRowConvert() {
-        return new StringRowConvert();
+        return stringRowConvert;
     }
 
 }
