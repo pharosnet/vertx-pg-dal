@@ -8,6 +8,8 @@ import javax.lang.model.util.Elements;
 
 public class DalGenerator implements SourceGenerator {
 
+    private QueryInterface queryInterface;
+
     @Override
     public DalGenerator load(Elements elementUtils, TypeElement type) {
 
