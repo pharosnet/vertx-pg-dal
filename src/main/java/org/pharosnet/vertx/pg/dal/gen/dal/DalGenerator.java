@@ -13,6 +13,9 @@ public class DalGenerator implements SourceGenerator {
     @Override
     public DalGenerator load(Elements elementUtils, TypeElement type) {
 
+
+
+
         return this;
     }
 

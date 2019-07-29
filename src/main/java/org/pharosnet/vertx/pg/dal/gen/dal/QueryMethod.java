@@ -7,6 +7,7 @@ public class QueryMethod {
     private String sql;
     private String name;
 
+    private List<MethodParam> params;
     private List<QueryArg> args;
     private QueryHandler handler;
 
@@ -40,5 +41,13 @@ public class QueryMethod {
 
     public void setHandler(QueryHandler handler) {
         this.handler = handler;
+    }
+
+    public List<MethodParam> getParams() {
+        return params;
+    }
+
+    public void setParams(List<MethodParam> params) {
+        this.params = params;
     }
 }
