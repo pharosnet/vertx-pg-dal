@@ -11,13 +11,32 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
 
 ## usage
 
+* add aliyun rdc mirror
+
+  ```xml
+  <mirror>
+      <id>pharosnet-rdc-releases</id>
+      <mirrorOf>pharosnet-rdc-releases</mirrorOf>
+      <name>mirror</name>
+      <url>https://repo.rdc.aliyun.com/repository/41027-release-AjzsrY/</url>
+  </mirror>
+  <mirror>
+      <id>pharosnet-rdc-snapshots</id>
+      <mirrorOf>pharosnet-rdc-snapshots</mirrorOf>
+      <name>mirror</name>
+      <url>https://repo.rdc.aliyun.com/repository/41027-snapshot-ja1JfT/</url>
+  </mirror>
+  ```
+
+  
+
 * add dependency
 
   ```xml
   <dependency>
   	<groupId>org.pharosnet</groupId>
   	<artifactId>vertx-pg-dal</artifactId>
-  	<version>1.0.0</version>
+  	<version>1.2.0</version>
   </dependency>
   ```
 
