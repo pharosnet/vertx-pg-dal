@@ -6,7 +6,7 @@
 
     <groupId>org.pharosnet</groupId>
     <artifactId>vertx-pg-dal</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
 
     <name>vertx-pg-dal</name>
     <url>https://github.com/pharosnet/vertx-pg-dal</url>
@@ -60,8 +60,28 @@
 
     </dependencies>
 
+
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
@@ -115,7 +135,7 @@
     <developers>
         <developer>
             <name>wangminxiang</name>
-            <email>ryougi.nevermore@hotmail.com</email>
+            <email>wangminxiang@pharosnet.org</email>
         </developer>
     </developers>
 
@@ -128,13 +148,14 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <id>pharosnet-rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/41027-snapshot-ja1JfT/</url>
         </snapshotRepository>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>pharosnet-rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/41027-release-AjzsrY/</url>
         </repository>
     </distributionManagement>
+
 
 </project>
