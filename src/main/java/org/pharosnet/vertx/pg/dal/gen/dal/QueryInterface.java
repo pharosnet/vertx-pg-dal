@@ -1,16 +1,30 @@
 package org.pharosnet.vertx.pg.dal.gen.dal;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QueryInterface {
 
+    public QueryInterface() {
+        this.methods = new ArrayList<>();
+    }
+
     private String name;
     private String pkg;
     private TypeName typeName;
-
+    private ClassName superClassName;
     private List<QueryMethod> methods;
+
+    public ClassName getSuperClassName() {
+        return superClassName;
+    }
+
+    public void setSuperClassName(ClassName superClassName) {
+        this.superClassName = superClassName;
+    }
 
     public String getName() {
         return name;

@@ -20,7 +20,7 @@ public class QueryArg implements Comparable<QueryArg> {
 
     @Override
     public int compareTo(QueryArg o) {
-        if (this.pos > o.pos) {
+        if (this.pos < o.pos) {
             return -1;
         }
         return 0;

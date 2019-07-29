@@ -1,8 +1,14 @@
 package org.pharosnet.vertx.pg.dal.gen.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QueryMethod {
+
+    public QueryMethod() {
+        this.params = new ArrayList<>();
+        this.args = new ArrayList<>();
+    }
 
     private String sql;
     private String name;

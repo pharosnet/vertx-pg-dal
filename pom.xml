@@ -6,7 +6,7 @@
 
     <groupId>org.pharosnet</groupId>
     <artifactId>vertx-pg-dal</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>vertx-pg-dal</name>
     <url>https://github.com/pharosnet/vertx-pg-dal</url>

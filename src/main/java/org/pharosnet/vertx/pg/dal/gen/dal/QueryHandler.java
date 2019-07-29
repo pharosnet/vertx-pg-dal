@@ -1,18 +1,26 @@
 package org.pharosnet.vertx.pg.dal.gen.dal;
 
-import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.ParameterizedTypeName;
 
 public class QueryHandler {
 
+    public QueryHandler() {
+    }
+
+    public QueryHandler(String name, ParameterizedTypeName typeName) {
+        this.name = name;
+        this.typeName = typeName;
+    }
+
     private String name;
 
-    private TypeName typeName;
+    private ParameterizedTypeName typeName;
 
-    public TypeName getTypeName() {
+    public ParameterizedTypeName getTypeName() {
         return typeName;
     }
 
-    public void setTypeName(TypeName typeName) {
+    public void setTypeName(ParameterizedTypeName typeName) {
         this.typeName = typeName;
     }
 
