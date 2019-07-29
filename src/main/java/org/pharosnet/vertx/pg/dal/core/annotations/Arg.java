@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.PARAMETER})
 public @interface Arg {
 
-    // positions
     int[] value();
 
 }

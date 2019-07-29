@@ -3,32 +3,13 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
 
 ## Features
 
-* asynchrony
+* async
 * simple
 * no reflect-code cost
 
 
 
-## usage
-
-* add aliyun rdc mirror
-
-  ```xml
-  <mirror>
-      <id>pharosnet-rdc-releases</id>
-      <mirrorOf>pharosnet-rdc-releases</mirrorOf>
-      <name>mirror</name>
-      <url>https://repo.rdc.aliyun.com/repository/41027-release-AjzsrY/</url>
-  </mirror>
-  <mirror>
-      <id>pharosnet-rdc-snapshots</id>
-      <mirrorOf>pharosnet-rdc-snapshots</mirrorOf>
-      <name>mirror</name>
-      <url>https://repo.rdc.aliyun.com/repository/41027-snapshot-ja1JfT/</url>
-  </mirror>
-  ```
-
-  
+## usage  
 
 * add dependency
 

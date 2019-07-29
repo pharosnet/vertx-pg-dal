@@ -39,7 +39,6 @@ public class PostgresDALs {
     }
 
     private static void scanPackage(String packageName, File currentFile) throws Exception {
-        //过滤器
         File[] fileList = currentFile.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
