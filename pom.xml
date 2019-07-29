@@ -11,6 +11,13 @@
     <name>vertx-pg-dal</name>
     <url>https://github.com/pharosnet/vertx-pg-dal</url>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -105,15 +112,29 @@
         </plugins>
     </build>
 
+    <developers>
+        <developer>
+            <name>wangminxiang</name>
+            <email>ryougi.nevermore@hotmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <tag>master</tag>
+        <url>git@github.com:pharosnet/vertx-pg-dal.git</url>
+        <connection>scm:git:git@github.com:pharosnet/vertx-pg-dal.git</connection>
+        <developerConnection>scm:git:git@github.com:RyougiNevermore/vertx-pg-dal.git</developerConnection>
+    </scm>
+
     <distributionManagement>
-        <repository>
-            <id>pharosnet-rdc-releases</id>
-            <url>https://repo.rdc.aliyun.com/repository/41027-release-AjzsrY/</url>
-        </repository>
         <snapshotRepository>
-            <id>pharosnet-rdc-snapshots</id>
-            <url>https://repo.rdc.aliyun.com/repository/41027-snapshot-ja1JfT/</url>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
 </project>
