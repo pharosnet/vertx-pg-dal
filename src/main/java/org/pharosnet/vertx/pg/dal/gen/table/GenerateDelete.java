@@ -6,7 +6,6 @@ import org.pharosnet.vertx.pg.dal.gen.commons.StringUtils;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 
-// ${src}DeleteBuilder
 public class GenerateDelete {
 
     static void generate(Filer filer, TableGenerator tableGenerator) throws Exception {

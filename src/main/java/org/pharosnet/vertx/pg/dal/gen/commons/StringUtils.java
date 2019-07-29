@@ -2,7 +2,6 @@ package org.pharosnet.vertx.pg.dal.gen.commons;
 
 public class StringUtils {
 
-    //首字母转小写
     public static String toLowerCaseFirstOne(String s){
         if(Character.isLowerCase(s.charAt(0)))
             return s;
@@ -11,7 +10,6 @@ public class StringUtils {
     }
 
 
-    //首字母转大写
     public static String toUpperCaseFirstOne(String s){
         if(Character.isUpperCase(s.charAt(0)))
             return s;
