@@ -8,6 +8,7 @@ public class QueryMethod {
     public QueryMethod() {
         this.params = new ArrayList<>();
         this.args = new ArrayList<>();
+        this.placeholders = new ArrayList<>();
     }
 
     private String sql;
@@ -15,6 +16,8 @@ public class QueryMethod {
 
     private List<MethodParam> params;
     private List<QueryArg> args;
+    private List<QueryArg> placeholders;
+
     private QueryHandler handler;
 
     public String getSql() {
@@ -55,5 +58,13 @@ public class QueryMethod {
 
     public void setParams(List<MethodParam> params) {
         this.params = params;
+    }
+
+    public List<QueryArg> getPlaceholders() {
+        return placeholders;
+    }
+
+    public void setPlaceholders(List<QueryArg> placeholders) {
+        this.placeholders = placeholders;
     }
 }
