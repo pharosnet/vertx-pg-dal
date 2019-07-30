@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.PARAMETER})
 public @interface Arg {
 
-    int[] value();
+    int[] value() default {};
+    ArgKind kind() default ArgKind.NORMAL;
 
 }

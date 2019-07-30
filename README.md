@@ -17,7 +17,7 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
   <dependency>
   	<groupId>org.pharosnet</groupId>
   	<artifactId>vertx-pg-dal</artifactId>
-  	<version>1.3.0</version>
+  	<version>1.4.0</version>
   </dependency>
   ```
 
@@ -120,6 +120,15 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
               @Arg({2})Integer offset,
               @Arg({3})Integer length,
               Handler<AsyncResult<Optional<User>>> handler);
+   
+      // support sql placeholder
+      @Query("select * from \"cdst\".\"user\" where \"id\" = $1 and \"name\" in (%names) offset $2 limit $3")
+      void query03(
+              @Arg({1}) String id,
+              @Arg(kind = ArgKind.PLACEHOLDER) List<Integer> names,
+              @Arg({2})Integer offset,
+              @Arg({3})Integer length,
+              Handler<AsyncResult<Optional<Stream<User>>>> handler);
   
   }
   

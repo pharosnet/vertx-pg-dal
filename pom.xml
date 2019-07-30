@@ -6,7 +6,7 @@
 
     <groupId>org.pharosnet</groupId>
     <artifactId>vertx-pg-dal</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 
     <name>vertx-pg-dal</name>
     <url>https://github.com/pharosnet/vertx-pg-dal</url>
@@ -98,9 +98,6 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
