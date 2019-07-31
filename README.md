@@ -15,9 +15,15 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
 
   ```xml
   <dependency>
-  	<groupId>org.pharosnet</groupId>
-  	<artifactId>vertx-pg-dal</artifactId>
-  	<version>1.4.0</version>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-pg-client</artifactId>
+      <version>${vertx.version}</version> <!-- [3.8.0, -->
+  </dependency>
+  
+  <dependency>
+      <groupId>org.pharosnet</groupId>
+      <artifactId>vertx-pg-dal</artifactId>
+      <version>1.4.0</version>
   </dependency>
   ```
 

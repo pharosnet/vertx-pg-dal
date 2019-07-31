@@ -47,6 +47,33 @@ public class PostgresDAL {
         return client;
     }
 
+    public <R> void query(String ql, RowConvert<R> convert, Handler<AsyncResult<Optional<Stream<R>>>> handler) {
+        this.client.query(
+                ql,
+                Collectors.mapping(
+                        convert::convert,
+                        Collectors.toList()
+                ),
+                r -> {
+                    if (r.failed()) {
+                        log.error("query failed", r.cause());
+                        if (log.isDebugEnabled()) {
+                            log.debug("query:\n\tsql:{}", ql);
+                        }
+                        handler.handle(Future.failedFuture(r.cause()));
+                        return;
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("query:\n\tsql:{}\n\trows:{}", ql, r.result().rowCount());
+                    }
+                    if (r.result().rowCount() == 0) {
+                        handler.handle(Future.succeededFuture(Optional.empty()));
+                        return;
+                    }
+                    handler.handle(Future.succeededFuture(Optional.of(r.result().value().stream())));
+                });
+    }
+
     public <R> void query(String ql, Tuple args, RowConvert<R> convert, Handler<AsyncResult<Optional<Stream<R>>>> handler) {
         this.client.preparedQuery(
                 ql,
@@ -72,6 +99,33 @@ public class PostgresDAL {
                         return;
                     }
                     handler.handle(Future.succeededFuture(Optional.of(r.result().value().stream())));
+                });
+    }
+
+    public <R> void queryOne(String ql, RowConvert<R> convert, Handler<AsyncResult<Optional<R>>> handler) {
+        this.client.query(
+                ql,
+                Collectors.mapping(
+                        convert::convert,
+                        Collectors.toList()
+                ),
+                r -> {
+                    if (r.failed()) {
+                        log.error("query one failed", r.cause());
+                        if (log.isDebugEnabled()) {
+                            log.debug("query one:\n\tsql:{}", ql);
+                        }
+                        handler.handle(Future.failedFuture(r.cause()));
+                        return;
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("query one:\n\tsql:{}\n\trows:{}", ql, r.result().rowCount());
+                    }
+                    if (r.result().rowCount() == 0) {
+                        handler.handle(Future.succeededFuture(Optional.empty()));
+                        return;
+                    }
+                    handler.handle(Future.succeededFuture(Optional.of(r.result().value().get(0))));
                 });
     }
 
@@ -129,6 +183,26 @@ public class PostgresDAL {
 
     public void queryJsonObject(String ql, Tuple args, Handler<AsyncResult<Optional<JsonObject>>> handler) {
         this.queryOne(ql, args, RowConverts.jsonObjectRowConvert(), handler);
+    }
+
+    public void update(String ql, Handler<AsyncResult<Integer>> handler) {
+        this.client.query(
+                ql,
+                r -> {
+                    if (r.failed()) {
+                        log.error("update failed", r.cause());
+                        if (log.isDebugEnabled()) {
+                            log.debug("update:\n\tsql:{}", ql);
+                        }
+                        handler.handle(Future.failedFuture(r.cause()));
+                        return;
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("update:\n\tsql:{}\n\trows:{}", ql, r.result().rowCount());
+                    }
+                    handler.handle(Future.succeededFuture(r.result().rowCount()));
+                }
+        );
     }
 
     public void update(String ql, Tuple args, Handler<AsyncResult<Integer>> handler) {

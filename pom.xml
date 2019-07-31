@@ -6,7 +6,7 @@
 
     <groupId>org.pharosnet</groupId>
     <artifactId>vertx-pg-dal</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
 
     <name>vertx-pg-dal</name>
     <url>https://github.com/pharosnet/vertx-pg-dal</url>
@@ -43,14 +43,9 @@
 
         <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-core</artifactId>
-            <version>${vertx.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
             <artifactId>vertx-pg-client</artifactId>
             <version>${vertx.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
