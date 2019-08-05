@@ -87,7 +87,7 @@ public class PostgresDALs {
         if (!clazz.isAnnotationPresent(Dal.class)) {
             return;
         }
-        String className = String.format("%s.impl.%s", clazz.getPackageName(), clazz.getSimpleName());
+        String className = String.format("%sImpl", clazz.getName());
         if (dals.containsKey(className)) {
             return;
         }
@@ -97,13 +97,13 @@ public class PostgresDALs {
     }
 
     @SuppressWarnings("unchecked")
-    public static <R extends PostgresDAL> R get(Class<R> clazz) {
+    public static <R> R get(Class<R> clazz) {
         if (PostgresDAL.get() == null || PostgresDAL.get().getClient() == null) {
             log.warn("postgres dal get failed, cause PostgresDAL has no instance, please call PostgresDAL.INIT() first");
             return null;
         }
 
-        String className = String.format("%s.impl.%s", clazz.getPackageName(), clazz.getSimpleName());
+        String className = String.format("%sImpl", clazz.getName());
         if (dals.containsKey(className)) {
             return (R) dals.get(className);
         }

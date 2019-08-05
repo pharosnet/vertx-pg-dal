@@ -23,7 +23,7 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
   <dependency>
       <groupId>org.pharosnet</groupId>
       <artifactId>vertx-pg-dal</artifactId>
-      <version>1.5.0</version>
+      <version>1.5.3</version>
   </dependency>
   ```
 
@@ -111,7 +111,7 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
 
   ```java
   @Dal
-  public interface UserDAL {
+  public interface UserDAL extends AbstractDAL {
   
       @Query("select * from \"cdst\".\"user\" where \"id\" = $1 or \"id\" = $2 offset $3 limit $4")
       void query01(

@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PostgresDAL {
+public class PostgresDAL implements AbstractDAL {
 
     private static final Logger log = LoggerFactory.getLogger(PostgresDAL.class);
 
