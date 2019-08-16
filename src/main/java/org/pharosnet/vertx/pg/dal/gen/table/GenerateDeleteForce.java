@@ -21,6 +21,7 @@ public class GenerateDeleteForce {
         StringBuilder buildTuples = new StringBuilder();
 
         // sql
+        int argp = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ");
         if (tableGenerator.getSchemaName().length() > 0) {
@@ -29,7 +30,8 @@ public class GenerateDeleteForce {
         sb.append("\"").append(tableGenerator.getTableName()).append("\" WHERE ");
         StringBuilder ids = new StringBuilder();
         for (RowField rowField : tableGenerator.getIds()) {
-            ids.append("AND ").append("\"").append(rowField.getColumn()).append("\" = ? ");
+            ids.append("AND ").append("\"").append(rowField.getColumn()).append(String.format("\" = $%d  ", argp));
+            argp ++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(rowField.getName())).append("()");
 
@@ -37,7 +39,7 @@ public class GenerateDeleteForce {
         String idCond = ids.toString().substring(4);
         sb.append(idCond);
         if (tableGenerator.getVersion() != null) {
-            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" = ? ");
+            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append(String.format("\" = $%d  ", argp));
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getVersion().getName())).append("()");
         }
@@ -109,6 +111,7 @@ public class GenerateDeleteForce {
 
         TypeName rowType = TypeName.get(tableGenerator.getTypeMirror());
         // sql
+        int argp = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ");
         if (tableGenerator.getSchemaName().length() > 0) {
@@ -117,7 +120,8 @@ public class GenerateDeleteForce {
         sb.append("\"").append(tableGenerator.getTableName()).append("\" WHERE ");
         StringBuilder ids = new StringBuilder();
         for (RowField rowField : tableGenerator.getIds()) {
-            ids.append("AND ").append("\"").append(rowField.getColumn()).append("\" = ? ");
+            ids.append("AND ").append("\"").append(rowField.getColumn()).append(String.format("\" = $%d  ", argp));
+            argp++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(rowField.getName())).append("()");
 
@@ -125,7 +129,7 @@ public class GenerateDeleteForce {
         String idCond = ids.toString().substring(4);
         sb.append(idCond);
         if (tableGenerator.getVersion() != null) {
-            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" = ? ");
+            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append(String.format("\" = $%d  ", argp));
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getVersion().getName())).append("()");
         }

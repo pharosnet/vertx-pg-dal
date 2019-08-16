@@ -24,26 +24,31 @@ public class GenerateUpdate {
         buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getModifyAt().getName())).append("()");
 
         // sql
+        int argp = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE ");
         if (tableGenerator.getSchemaName().length() > 0) {
             sb.append("\"").append(tableGenerator.getSchemaName()).append("\".");
         }
         sb.append("\"").append(tableGenerator.getTableName()).append("\" SET ");
-        sb.append("\"").append(tableGenerator.getModifyBy().getColumn()).append("\" = ? , ");
-        sb.append("\"").append(tableGenerator.getModifyAt().getColumn()).append("\" = ? ");
+        sb.append("\"").append(tableGenerator.getModifyBy().getColumn()).append(String.format("\" = $%d , ", argp));
+        argp ++;
+        sb.append("\"").append(tableGenerator.getModifyAt().getColumn()).append(String.format("\" = $%d ", argp));
+        argp ++;
         if (tableGenerator.getVersion() != null) {
             sb.append(", \"").append(tableGenerator.getVersion().getColumn()).append("\" = ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" + 1 ");
         }
         for (RowField column : tableGenerator.getColumns()) {
-            sb.append(", \"").append(column.getColumn()).append("\" = ? ");
+            sb.append(", \"").append(column.getColumn()).append(String.format("\" = $%d ", argp));
+            argp ++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(column.getName())).append("()");
         }
         sb.append("WHERE ");
         StringBuilder ids = new StringBuilder();
         for (RowField rowField : tableGenerator.getIds()) {
-            ids.append("AND ").append("\"").append(rowField.getColumn()).append("\" = ? ");
+            ids.append("AND ").append("\"").append(rowField.getColumn()).append(String.format("\" = $%d ", argp));
+            argp ++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(rowField.getName())).append("()");
 
@@ -51,7 +56,7 @@ public class GenerateUpdate {
         String idCond = ids.toString().substring(4);
         sb.append(idCond);
         if (tableGenerator.getVersion() != null) {
-            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" = ? ");
+            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append(String.format("\" = $%d ", argp));
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getVersion().getName())).append("()");
         }
@@ -125,19 +130,23 @@ public class GenerateUpdate {
         buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getModifyAt().getName())).append("()");
         TypeName rowType = TypeName.get(tableGenerator.getTypeMirror());
         // sql
+        int argp = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE ");
         if (tableGenerator.getSchemaName().length() > 0) {
             sb.append("\"").append(tableGenerator.getSchemaName()).append("\".");
         }
         sb.append("\"").append(tableGenerator.getTableName()).append("\" SET ");
-        sb.append("\"").append(tableGenerator.getModifyBy().getColumn()).append("\" = ? , ");
-        sb.append("\"").append(tableGenerator.getModifyAt().getColumn()).append("\" = ? ");
+        sb.append("\"").append(tableGenerator.getModifyBy().getColumn()).append(String.format("\" = $%d , ", argp));
+        argp++;
+        sb.append("\"").append(tableGenerator.getModifyAt().getColumn()).append(String.format("\" = $%d ", argp));
+        argp++;
         if (tableGenerator.getVersion() != null) {
             sb.append(", \"").append(tableGenerator.getVersion().getColumn()).append("\" = ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" + 1 ");
         }
         for (RowField column : tableGenerator.getColumns()) {
-            sb.append(", \"").append(column.getColumn()).append("\" = ? ");
+            sb.append(", \"").append(column.getColumn()).append(String.format("\" = $%d ", argp));
+            argp++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(column.getName())).append("()");
         }
@@ -145,7 +154,8 @@ public class GenerateUpdate {
 
         StringBuilder ids = new StringBuilder();
         for (RowField rowField : tableGenerator.getIds()) {
-            ids.append("AND ").append("\"").append(rowField.getColumn()).append("\" = ? ");
+            ids.append("AND ").append("\"").append(rowField.getColumn()).append(String.format("\" = $%d  ", argp));
+            argp++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(rowField.getName())).append("()");
 
@@ -153,7 +163,7 @@ public class GenerateUpdate {
         String idCond = ids.toString().substring(4);
         sb.append(idCond);
         if (tableGenerator.getVersion() != null) {
-            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" = ? ");
+            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append(String.format("\" = $%d ", argp));
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getVersion().getName())).append("()");
         }
