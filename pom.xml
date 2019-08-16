@@ -6,7 +6,7 @@
 
     <groupId>org.pharosnet</groupId>
     <artifactId>vertx-pg-dal</artifactId>
-    <version>1.5.3</version>
+    <version>1.5.4</version>
 
     <name>vertx-pg-dal</name>
     <url>https://github.com/pharosnet/vertx-pg-dal</url>
@@ -163,7 +163,7 @@
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
-                        <phase>verify</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>

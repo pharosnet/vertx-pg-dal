@@ -24,17 +24,21 @@ public class GenerateDelete {
         buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getDeleteAt().getName())).append("()");
 
         // sql
+        int argp = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE ");
         if (tableGenerator.getSchemaName().length() > 0) {
             sb.append("\"").append(tableGenerator.getSchemaName()).append("\".");
         }
         sb.append("\"").append(tableGenerator.getTableName()).append("\" SET ");
-        sb.append("\"").append(tableGenerator.getDeleteBy().getColumn()).append("\" = ? , ");
-        sb.append("\"").append(tableGenerator.getDeleteAt().getColumn()).append("\" = ? WHERE ");
+        sb.append("\"").append(tableGenerator.getDeleteBy().getColumn()).append(String.format("\" = $%d , ", argp));
+        argp++;
+        sb.append("\"").append(tableGenerator.getDeleteAt().getColumn()).append(String.format("\" = $%d  ", argp)).append(" WHERE ");
+        argp++;
         StringBuilder ids = new StringBuilder();
         for (RowField rowField : tableGenerator.getIds()) {
-            ids.append("AND ").append("\"").append(rowField.getColumn()).append("\" = ? ");
+            ids.append("AND ").append("\"").append(rowField.getColumn()).append(String.format("\" = $%d ", argp));
+            argp ++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(rowField.getName())).append("()");
 
@@ -42,7 +46,7 @@ public class GenerateDelete {
         String idCond = ids.toString().substring(4);
         sb.append(idCond);
         if (tableGenerator.getVersion() != null) {
-            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" = ? ");
+            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append(String.format("\" = $%d  ", argp));
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getVersion().getName())).append("()");
         }
@@ -116,17 +120,21 @@ public class GenerateDelete {
         buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getDeleteAt().getName())).append("()");
         TypeName rowType = TypeName.get(tableGenerator.getTypeMirror());
         // sql
+        int argp = 1;
         StringBuilder sb = new StringBuilder();
         sb.append("UPDATE ");
         if (tableGenerator.getSchemaName().length() > 0) {
             sb.append("\"").append(tableGenerator.getSchemaName()).append("\".");
         }
         sb.append("\"").append(tableGenerator.getTableName()).append("\" SET ");
-        sb.append("\"").append(tableGenerator.getDeleteBy().getColumn()).append("\" = ? , ");
-        sb.append("\"").append(tableGenerator.getDeleteAt().getColumn()).append("\" = ? WHERE ");
+        sb.append("\"").append(tableGenerator.getDeleteBy().getColumn()).append(String.format("\" = $%d , ", argp));
+        argp ++;
+        sb.append("\"").append(tableGenerator.getDeleteAt().getColumn()).append(String.format("\" = $%d , ", argp)).append(" WHERE ");
+        argp ++;
         StringBuilder ids = new StringBuilder();
         for (RowField rowField : tableGenerator.getIds()) {
-            ids.append("AND ").append("\"").append(rowField.getColumn()).append("\" = ? ");
+            ids.append("AND ").append("\"").append(rowField.getColumn()).append(String.format("\" = $%d  ", argp));
+            argp ++;
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(rowField.getName())).append("()");
 
@@ -134,7 +142,7 @@ public class GenerateDelete {
         String idCond = ids.toString().substring(4);
         sb.append(idCond);
         if (tableGenerator.getVersion() != null) {
-            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append("\" = ? ");
+            sb.append("AND ").append("\"").append(tableGenerator.getVersion().getColumn()).append(String.format("\" = $%d  ", argp));
             buildTuples.append(", ");
             buildTuples.append("row.get").append(StringUtils.toUpperCaseFirstOne(tableGenerator.getVersion().getName())).append("()");
         }
