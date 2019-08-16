@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -20,6 +22,11 @@ public class PostgresDALs {
     private static final Logger log = LoggerFactory.getLogger(PostgresDALs.class);
 
     private static Map<String, Object> dals = new ConcurrentHashMap<>();
+    private static Lock lock = new ReentrantLock();
+
+    public static void INIT(PgPool pgPool) {
+        PostgresDAL.INTI(pgPool);
+    }
 
     public static void INIT(PgPool pgPool, String basePackage) throws Exception {
         PostgresDAL.INTI(pgPool);
@@ -102,9 +109,10 @@ public class PostgresDALs {
             log.warn("postgres dal get failed, cause PostgresDAL has no instance, please call PostgresDAL.INIT() first");
             return null;
         }
-
         String className = String.format("%sImpl", clazz.getName());
+        lock.lock();
         if (dals.containsKey(className)) {
+            lock.unlock();
             return (R) dals.get(className);
         }
         try {
@@ -115,6 +123,8 @@ public class PostgresDALs {
         } catch (Exception e) {
             log.error("get postgres dal failed", e);
             return null;
+        } finally {
+            lock.unlock();
         }
     }
 
