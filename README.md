@@ -23,7 +23,7 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
   <dependency>
       <groupId>org.pharosnet</groupId>
       <artifactId>vertx-pg-dal</artifactId>
-      <version>1.5.4</version>
+      <version>1.5.5</version>
   </dependency>
   ```
 
@@ -139,7 +139,14 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
   }
   
   ```
+ * Get dal from PostgresDALs.
+  ```java
+  // init postgres dal holder.
+  PostgresDALs.INIT(client);
+  // get UserDAL from PostgresDALs
+  UserDAL dal = PostgresDALs.get(UserDAL.class);
 
+```
   
 
 * RUN MAVEN COMPILE, THEN IT WILL GENERATE DAL JAVA FILES. 
