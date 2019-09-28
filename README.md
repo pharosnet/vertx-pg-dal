@@ -23,7 +23,7 @@ Postgres database access layer, base on vertx-pg-client (3.8.0).
   <dependency>
       <groupId>org.pharosnet</groupId>
       <artifactId>vertx-pg-dal</artifactId>
-      <version>1.5.5</version>
+      <version>1.5.6</version>
   </dependency>
   ```
 
