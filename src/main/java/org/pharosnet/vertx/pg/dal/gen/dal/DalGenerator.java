@@ -120,7 +120,14 @@ public class DalGenerator implements SourceGenerator {
             // one or list
             QueryKind queryKind = new QueryKind();
             this.loadQueryKind(queryKind, queryMethod.getHandler().getTypeName());
-            ClassName convertClassName = ClassName.get(queryKind.getName().packageName(), queryKind.getName().simpleName() + "Convert");
+            ClassName convertClassName = null;
+            if (queryKind.getName().isBoxedPrimitive()) {
+                convertClassName = ClassName.get("org.pharosnet.vertx.pg.dal.core.convert", String.format("%sRowConvert", queryKind.getName().simpleName()));
+            } else if (queryKind.getName().simpleName().equals("JsonObject")) {
+                convertClassName = ClassName.get("org.pharosnet.vertx.pg.dal.core.convert", "JsonObjectRowConvert");
+            } else {
+                convertClassName = ClassName.get(queryKind.getName().packageName(), queryKind.getName().simpleName() + "Convert");
+            }
 
             // placeholders
             if (!queryMethod.getPlaceholders().isEmpty()) {
@@ -154,7 +161,6 @@ public class DalGenerator implements SourceGenerator {
                     buildMethod.addStatement(String.format("this.query(sql, args, $T.convert()::convert, %s)", queryMethod.getHandler().getName()), convertClassName);
                 }
             } else {
-
                 if (queryKind.getOne()) {
                     buildMethod.addStatement(String.format("this.queryOne(%s, args, $T.convert()::convert, %s)", sqlName, queryMethod.getHandler().getName()), convertClassName);
                 } else {

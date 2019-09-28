@@ -8,6 +8,12 @@ import java.time.format.DateTimeFormatter;
 
 public class JsonObjectRowConvert implements RowConvert<JsonObject> {
 
+    private static final JsonObjectRowConvert convert = new JsonObjectRowConvert();
+
+    public static JsonObjectRowConvert convert() {
+        return convert;
+    }
+
     public JsonObject convert(Row row) {
         JsonObject jsonObject = new JsonObject();
         int size = row.size();
