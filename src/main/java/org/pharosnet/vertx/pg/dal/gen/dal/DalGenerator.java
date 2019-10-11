@@ -96,8 +96,12 @@ public class DalGenerator implements SourceGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .returns(TypeName.VOID);
 
-            for (MethodParam methodParam : queryMethod.getParams()) {
-                buildMethod.addParameter(methodParam.getTypeName(), methodParam.getName());
+            Boolean hasQueryArgs = false;
+            if (queryMethod.getParams() != null && !queryMethod.getParams().isEmpty()) {
+                for (MethodParam methodParam : queryMethod.getParams()) {
+                    buildMethod.addParameter(methodParam.getTypeName(), methodParam.getName());
+                }
+                hasQueryArgs = true;
             }
             if (queryMethod.getHandler() == null) {
                 throw new IllegalAccessException("miss handler param");
@@ -129,6 +133,11 @@ public class DalGenerator implements SourceGenerator {
                 convertClassName = ClassName.get(queryKind.getName().packageName(), queryKind.getName().simpleName() + "Convert");
             }
 
+            String queryMethodArgs = "";
+            if (hasQueryArgs) {
+                queryMethodArgs = " args,";
+            }
+
             // placeholders
             if (!queryMethod.getPlaceholders().isEmpty()) {
                 for (QueryArg phArg : queryMethod.getPlaceholders()) {
@@ -155,16 +164,17 @@ public class DalGenerator implements SourceGenerator {
 
                     buildMethod.addCode(codeB.toString());
                 }
+
                 if (queryKind.getOne()) {
-                    buildMethod.addStatement(String.format("this.queryOne(sql, args, $T.convert()::convert, %s)", queryMethod.getHandler().getName()), convertClassName);
+                    buildMethod.addStatement(String.format("this.queryOne(sql,%s $T.convert()::convert, %s)", queryMethodArgs, queryMethod.getHandler().getName()), convertClassName);
                 } else {
-                    buildMethod.addStatement(String.format("this.query(sql, args, $T.convert()::convert, %s)", queryMethod.getHandler().getName()), convertClassName);
+                    buildMethod.addStatement(String.format("this.query(sql,%s $T.convert()::convert, %s)", queryMethodArgs, queryMethod.getHandler().getName()), convertClassName);
                 }
             } else {
                 if (queryKind.getOne()) {
-                    buildMethod.addStatement(String.format("this.queryOne(%s, args, $T.convert()::convert, %s)", sqlName, queryMethod.getHandler().getName()), convertClassName);
+                    buildMethod.addStatement(String.format("this.queryOne(%s,%s $T.convert()::convert, %s)", sqlName, queryMethodArgs, queryMethod.getHandler().getName()), convertClassName);
                 } else {
-                    buildMethod.addStatement(String.format("this.query(%s, args, $T.convert()::convert, %s)", sqlName, queryMethod.getHandler().getName()), convertClassName);
+                    buildMethod.addStatement(String.format("this.query(%s,%s $T.convert()::convert, %s)", sqlName, queryMethodArgs, queryMethod.getHandler().getName()), convertClassName);
                 }
             }
             buildMethod.addStatement("return");

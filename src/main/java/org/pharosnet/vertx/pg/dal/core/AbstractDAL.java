@@ -28,6 +28,7 @@ public interface AbstractDAL {
     void updateBatch(String ql, List<Tuple> args, Handler<AsyncResult<Integer>> handler);
     void update(ExecBuilder builder, Handler<AsyncResult<Integer>> handler);
     void updateBatch(ExecBatchBuilder builder, Handler<AsyncResult<Integer>> handler);
+
     void tx(Handler<AsyncResult<Tx>> handler);
 
 }
